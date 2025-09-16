@@ -1,101 +1,166 @@
-/*CORE (NEED FOR THEME WORKING) */
-@media (max-width: 767px) {
-#drawer.App-drawer .Header-logo {
-	max-height: 60px !important;
-}
-#drawer.App-drawer .Header-title {
+/* ==== 抽屉（移动端）— 单一容器整合版：用站点主色；含夜间模式修复 ==== */
+@media (max-width: 768px) {
+  /* 主题主色 + 底部安全区 */
+  #drawer.App-drawer {
+    --secondary-color: var(--primary-color, #5B8C5A);
+    padding-bottom: max(16px, env(safe-area-inset-bottom));
+  }
+
+  /* Logo 限高 */
+  #drawer.App-drawer .Header-logo { max-height: 60px !important; }
+
+  /* 头部标题（配色/圆角） */
+  #drawer.App-drawer .Header-title {
     text-align: center;
-	border-start-end-radius: 15px;
     padding: 35px 0 35px !important;
-background: var(--secondary-color);
-}
-#drawer.App-drawer .FormControl, .Search-input input {
+    background: var(--secondary-color);
+    border-start-end-radius: 15px;      /* 逻辑圆角 */
+    border-top-right-radius: 15px;      /* 回退(LTR) */
+  }
+  #drawer.App-drawer .Header-title,
+  #drawer.App-drawer .Header-title a { color: #fff !important; }
+
+  /* 输入控件仅限抽屉内，避免误伤全站 */
+  #drawer.App-drawer .FormControl,
+  #drawer.App-drawer .Search-input input {
     width: 100%;
     text-align: left;
     border-radius: 30px;
-}
-.App-drawer {
-transition: 0.5s all !important;
-}
-.drawer-backdrop.in {
+  }
+
+  /* Drawer 过渡统一：仅 transform（替换原先 all） */
+  .App-drawer {
+    transition: transform .1s !important;
+    margin: 30px 0 !important;
+  }
+  .drawerOpen .App-drawer {
+    margin: 10vw 0 !important;
+    border-start-end-radius: 15px !important;
+    border-end-end-radius: 15px !important;
+    border-top-right-radius: 15px !important;     /* 回退 */
+    border-bottom-right-radius: 15px !important;  /* 回退 */
+  }
+
+  /* 幕布：背景 + 背景模糊（正确写法；去掉自身 filter:blur） */
+  .drawer-backdrop.in {
     background: #000000a1 !important;
-    backdrop-filter: blur(5px)  !important;
-}
-#drawer.App-drawer span.username:after {
-    content: "Manage Account 🡲";
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px) !important;
+  }
+
+  /* 头像样式（保持原外观） */
+  #drawer.App-drawer .SessionDropdown .Dropdown-toggle .Avatar {
+    --size: 55px;
+    display: inline-flex;
+    position: relative;
+    box-shadow: rgba(14,30,37,0.12) 0 2px 4px, rgba(14,30,37,0.32) 0 2px 16px;
+    margin: 0 calc(20vw);
+  }
+
+  /* 头部控制区纵排 + 按钮置中（保持原外观） */
+  #drawer.App-drawer .Header-controls { display: flex; flex-direction: column; }
+  #drawer.App-drawer .Header-controls .Button { text-align: center !important; }
+
+  /* 用户名样式 + 中文提示（你的修复） */
+  #drawer.App-drawer span.username {
+    display: block;
+    text-align: center;
+    margin: 10px 15px 0;
+    font-size: large;
+    color: white !important;
+  }
+  #drawer.App-drawer span.username::after,
+  #drawer.App-drawer .SessionDropdown span.username::after {
+    content: "管理账户 →" !important;
     color: black;
     display: block;
     margin-top: 25px;
     font-size: 12px;
-	    background: floralwhite;
+    background: floralwhite;
     border-radius: 10px;
     padding: 5px;
-}
-#drawer.App-drawer .Header-controls {
-    flex-direction: column;
-    display: flex;
-}
-#drawer.App-drawer span.username {
-    display: block;
-    text-align: center;
-margin: 10px 15px 0;
-    font-size: large;
-	color: white !important;
-}
-#drawer.App-drawer .SessionDropdown .Dropdown-toggle .Avatar {
-    --size: 55px;
-    display: inline-flex;
-    position: relative;
-    box-shadow: rgba(14,30,37,0.12) 0px 2px 4px 0px, rgba(14,30,37,0.32) 0px 2px 16px 0px;
-    margin: 0 calc(20vw);
-}
- .drawerOpen .App-drawer {
-    margin: 10vw 0 !important;
-border-end-end-radius: 15px !important;
-    border-start-end-radius: 15px !important;
-}
-#drawer.App-drawer .Header-controls .Button {
-    text-align: center !important;
-}
-.App-drawer {
-    transition: transform .1s !important;
-	margin: 30px 0 !important;
-}
-#drawer.App-drawer .SessionDropdown .Dropdown-toggle {
-    height: 50vw;
-    background: linear-gradient(135deg, #d8950a, #c117b5);
-margin: 10px 0;
-border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
-}
-#drawer.App-drawer .drawer-backdrop {
-    opacity: 1 !important;
-    filter: blur(60px);
-}
-@media @phone {
-.open.Dropdown .Dropdown-menu {
-    margin: 25px 10px !important;
-    border-radius: 10px !important;
-    padding: 8px !important;
-box-shadow: 0px 5px 40px 0px #212121;
-} }
+  }
 
-
-body when (@config-dark-mode = true) {
-#drawer.App-drawer .Header-title {
-    text-align: center;
-    padding: 35px 0 35px !important;
-background: var(--secondary-color);
-}
-#drawer.App-drawer .SessionDropdown .Dropdown-toggle {
+  /* 渐变巨幕（保持原始 50vw 高度与阴影） */
+  #drawer.App-drawer .SessionDropdown .Dropdown-toggle {
     height: 50vw;
     background: linear-gradient(135deg, #d8950a, #c117b5);
     margin: 10px 0;
     border-radius: 10px;
-    box-shadow: rgba(0,0,0,0.4) 0px 2px 4px, rgba(0,0,0,0.3) 0px 7px 13px -3px, rgba(0,0,0,0.2) 0px -3px 0px inset;
-}
-}
-.Dropdown-menu>li>a, .Dropdown-menu>li>button, .Dropdown-menu>li>span {
-    border-radius: 10px;
-}
+    box-shadow: rgba(0,0,0,0.4) 0 2px 4px,
+                rgba(0,0,0,0.3) 0 7px 13px -3px,
+                rgba(0,0,0,0.2) 0 -3px 0 inset;
+  }
+
+  /* “Manage Account” 统一显示中文（你的修复） */
+  #drawer.App-drawer a[href*="/settings"] .Button-label,
+  #drawer.App-drawer .BMD-profileCard .Button .Button-label {
+    font-size: 0 !important;
+  }
+  #drawer.App-drawer a[href*="/settings"] .Button-label::after,
+  #drawer.App-drawer .BMD-profileCard .Button .Button-label::after {
+    content: "管理账户";
+    font-size: 16px;
+    font-weight: 600;
+  }
+
+  /* Drawer 分裂下拉（你的修复） */
+  #drawer.App-drawer .LinkDropdown.Dropdown--split {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    white-space: nowrap;
+    gap: 0.15em;
+    width: 100% !important;
+  }
+  #drawer.App-drawer .LinkDropdown.Dropdown--split .SplitDropdown-button,
+  #drawer.App-drawer .LinkDropdown.Dropdown--split .Dropdown-toggle {
+    display: inline-flex !important;
+    align-items: center;
+    width: auto !important;
+    margin: 0.15em;
+    padding: 0 !important;
+    background: transparent !important;
+    border: 0 !important;
+  }
+
+  /* 下拉菜单圆角（保持原外观） */
+  .Dropdown-menu > li > a,
+  .Dropdown-menu > li > button,
+  .Dropdown-menu > li > span { border-radius: 10px; }
+
+  /* 打开态下拉：阴影与间距（原 @phone 合并进来） */
+  .open.Dropdown .Dropdown-menu {
+    margin: 25px 10px !important;
+    border-radius: 10px !important;
+    padding: 8px !important;
+    box-shadow: 0 5px 40px 0 #212121;
+  }
+
+  /* 夜间模式（Less 守卫）——修复标题链接需为黑色 */
+  body when (@config-dark-mode = true) {
+    #drawer.App-drawer .Header-title {
+      text-align: center;
+      padding: 35px 0 35px !important;
+      background: var(--secondary-color);
+    }
+    /* 关键覆盖：夜间标题与链接用黑色 */
+    #drawer.App-drawer .Header-title,
+    #drawer.App-drawer .Header-title a,
+    #drawer.App-drawer a#home-link,
+    #drawer.App-drawer a#home-link:visited,
+    #drawer.App-drawer a#home-link:hover {
+      color: #000 !important;
+      text-shadow: none;
+    }
+    #drawer.App-drawer .SessionDropdown .Dropdown-toggle {
+      height: 50vw;
+      background: linear-gradient(135deg, #d8950a, #c117b5);
+      margin: 10px 0;
+      border-radius: 10px;
+      box-shadow: rgba(0,0,0,0.4) 0 2px 4px,
+                  rgba(0,0,0,0.3) 0 7px 13px -3px,
+                  rgba(0,0,0,0.2) 0 -3px 0 inset;
+    }
+  }
 }
