@@ -3,18 +3,23 @@
     "description": "A Flarum extension, Make the mobile drawer look better.",
     "keywords": [
         "flarum",
-		"drawer",
-		"mobile",
-		"better"
+        "drawer",
+        "mobile",
+        "better"
     ],
     "type": "flarum-extension",
     "license": "MIT",
     "support": {
-        "issues": "https://github.com/betterflarum/bettermobiledrawer",
+        "issues": "https://github.com/betterflarum/bettermobiledrawer/issues",
         "source": "https://github.com/betterflarum/bettermobiledrawer"
     },
     "require": {
         "flarum/core": "^1.8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "BetterFlarum\\BetterMobileDrawer\\": "src/"
+        }
     },
     "authors": [
         {
